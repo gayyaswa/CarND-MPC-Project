@@ -21,8 +21,6 @@ double dt = 0.1;
 // This is the length from front to CoG that has a similar radius.
 const double Lf = 2.67;
 
-double ref_cte = 0;
-double ref_epsi = 0;
 double ref_v = 45;
 
 // Initialize the state and actuator variable in a single vector
@@ -53,9 +51,8 @@ public:
 
 		// The part of the cost based on the reference state.
 		for (int t = 0; t < N; t++) {
-			//1000
-			fg[0] += 1000 * CppAD::pow(vars[cte_start + t], 2);
-			fg[0] += 1000 * CppAD::pow(vars[epsi_start + t], 2);
+			fg[0] += 750 * CppAD::pow(vars[cte_start + t], 2);
+			fg[0] += 750 * CppAD::pow(vars[epsi_start + t], 2);
 			fg[0] += CppAD::pow(vars[v_start + t] - ref_v, 2);
 		}
 
@@ -67,9 +64,8 @@ public:
 
 		// Minimize the value gap between sequential actuations.
 		for (int t = 0; t < N - 2; t++) {
-			//100, 10
 			fg[0] += 100000 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
-			fg[0] += 5000 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+			fg[0] += 3000 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
 		}
 
 		// Setup and Initial constraints
@@ -140,7 +136,6 @@ MPC::~MPC() {
 
 std::vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 	bool ok = true;
-	size_t i;
 	typedef CPPAD_TESTVECTOR(double)Dvector;
 
 	// number of independent variables
@@ -163,14 +158,6 @@ std::vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 	double v = state[3];
 	double cte = state[4];
 	double epsi = state[5];
-
-	// Set the initial variable values
-//	vars[x_start] = x;
-//	vars[y_start] = y;
-//	vars[psi_start] = psi;
-//	vars[v_start] = v;
-//	vars[cte_start] = cte;
-//	vars[epsi_start] = epsi;
 
 	Dvector vars_lowerbound(n_vars);
 	Dvector vars_upperbound(n_vars);
@@ -254,7 +241,7 @@ std::vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 	ok &= solution.status == CppAD::ipopt::solve_result<Dvector>::success;
 
 	// Cost
-	auto cost = solution.obj_value;
+	//auto cost = solution.obj_value;
 	//std::cout << "Cost " << cost << std::endl;
 
 	std::vector<double> result;

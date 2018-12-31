@@ -143,13 +143,6 @@ int main() {
           // ctet+1 = ctet + vt ∗sin(eψt)∗dt
           //eψt+1 = ψt − ψdest +(Vt/Lf * δt ∗dt)
 
-//          double x_t1 = xt0 + ( v /* cos 0 = 1 */ * dt  );
-//          double y_t1 = yt0 + 0  /*( v * sin 0 * dt) */;
-//          double psi_t1 = psi0 - ( v/Lf * steer_value * dt );
-//          double v_t1 = v + throttle_value * dt;
-//          double cte_t1 = cte0 + v * sin(epsi0) * dt;
-//          double epsi_t1 = epsi0 - ( v/Lf * atan(coeffs[1]) * dt );
-
           double x_t1 = xt0 + ( v * cos(psi0)  * dt );
 		  double y_t1 = yt0 + ( v * sin(psi0) * dt );
 	      double psi_t1 = psi0 - ( v/Lf * steer_value * dt );
@@ -163,10 +156,10 @@ int main() {
           auto vars = mpc.Solve(curr_state, coeffs);
 
           /*
-			* Calculate steering angle and throttle using MPC.
-			*
-			* Both are in between [-1, 1].
-			*
+           * Calculate steering angle and throttle using MPC.
+           *
+           * Both are in between [-1, 1].
+           *
 		  */
           json msgJson;
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
