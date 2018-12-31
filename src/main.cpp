@@ -99,11 +99,11 @@ int main() {
           //polynomial calculations.
           for(int i=0; i < ptsx.size(); ++i)
           {
-        	  double shifted_x = ptsx[i] - px;
-        	  double shifted_y = ptsy[i] -py;
+              double shifted_x = ptsx[i] - px;
+              double shifted_y = ptsy[i] -py;
 
-        	  ptsx[i] = shifted_x * cos(-psi) - shifted_y * sin(-psi);
-        	  ptsy[i] = shifted_x * sin(-psi) + shifted_y * cos(-psi);
+              ptsx[i] = shifted_x * cos(-psi) - shifted_y * sin(-psi);
+              ptsy[i] = shifted_x * sin(-psi) + shifted_y * cos(-psi);
 
           }
 
@@ -144,11 +144,11 @@ int main() {
           //eψt+1 = ψt − ψdest +(Vt/Lf * δt ∗dt)
 
           double x_t1 = xt0 + ( v * cos(psi0)  * dt );
-		  double y_t1 = yt0 + ( v * sin(psi0) * dt );
-	      double psi_t1 = psi0 - ( v/Lf * steer_value * dt );
-		  double v_t1 = v + throttle_value * dt;
-		  double cte_t1 = cte0 + v * sin(epsi0) * dt;
-		  double epsi_t1 = epsi0 - ( v/Lf * atan(coeffs[1]) * dt );
+          double y_t1 = yt0 + ( v * sin(psi0) * dt );
+          double psi_t1 = psi0 - ( v/Lf * steer_value * dt );
+          double v_t1 = v + throttle_value * dt;
+          double cte_t1 = cte0 + v * sin(epsi0) * dt;
+          double epsi_t1 = epsi0 - ( v/Lf * atan(coeffs[1]) * dt );
 
           curr_state << x_t1, y_t1, psi_t1, v_t1, cte_t1, epsi_t1;
 
@@ -160,7 +160,7 @@ int main() {
            *
            * Both are in between [-1, 1].
            *
-		  */
+          */
           json msgJson;
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
           // Otherwise the values will be in between [-deg2rad(25), deg2rad(25] instead of [-1, 1].
@@ -178,14 +178,14 @@ int main() {
 
           for(int i = 2; i < vars.size(); ++i)
           {
-        	  if(i % 2 == 0)
-        	  {
-        		  mpc_x_vals.push_back(vars[i]);
-        	  }
-        	  else
-        	  {
-        		  mpc_y_vals.push_back(vars[i]);
-        	  }
+              if(i % 2 == 0)
+              {
+                  mpc_x_vals.push_back(vars[i]);
+              }
+              else
+              {
+                  mpc_y_vals.push_back(vars[i]);
+              }
           }
 
           msgJson["mpc_x"] = mpc_x_vals;
@@ -203,8 +203,8 @@ int main() {
 
           for(int i=0; i < num_points; ++i)
           {
-        	  next_x_vals.push_back(poly_increment * i);
-        	  next_y_vals.push_back(polyeval(coeffs, poly_increment * i));
+              next_x_vals.push_back(poly_increment * i);
+              next_y_vals.push_back(polyeval(coeffs, poly_increment * i));
           }
 
           msgJson["next_x"] = next_x_vals;
