@@ -26,11 +26,11 @@ For the project T value choosen was **1s**
 based on that Number of timesteps N was fixed at **10** and dt was **0.1s**. This value was arrived based on the discussion in walkthrough video tried other values **(20, 0.05)** etc but the vehicle became unstable for these values and went out of the track so decided upon using the mentioned values.
 
 ## Polynomial Fitting and MPC Preprocessing
-Input waypoints or transformed into vehicle coordinates and transformed coordinates are used to fit a third order polynomial line. The genrated polynomial is used to compute vehicle **cte0** and **eψ0** for the initial state. The current state is passed into the cost optmizer which would geneate optimize actuation output steer angle and throttle by minimizing the **cte and  eψ**
+Input waypoints or transformed into vehicle coordinates and transformed coordinates are used to fit a third order polynomial. The genrated polynomial is used to compute vehicle **cte0** and **eψ0** for the initial state. The current state is passed into the cost optmizer which would generate optimized actuation output steer angle and throttle by minimizing the **cte and  eψ**
 
 ## Model Predictive Control with Latency
 
-Initial tunning of MPC was done with latency set to 0, I was able to make the vehicle complete the track by influencing ( X 100 ) the cost minimizer on cte and epsi. But one the actuation delay **100ms** was added vehicle crashed by going off the track. As suggested by the community I used the kinematic model and computed the initial by accouting dt ( 100 ms) delay.
+Initial tunning of MPC was done with latency set to 0, I was able to make the vehicle complete the track by influencing the cost minimizer on cte and epsi part the multiplier values were in the order of 100. But once the actuation delay **100ms** was added vehicle crashed by going off the track. As suggested by the community I used the kinematic model and computed the initial by accounting dt ( 100 ms) delay.
 
 ``` c++
 //Update the current state by accounting the 100ms delay using
@@ -52,7 +52,7 @@ double epsi_t1 = epsi0 - ( v/Lf * atan(coeffs[1]) * dt );
 curr_state << x_t1, y_t1, psi_t1, v_t1, cte_t1, epsi_t1;
 ```
 
-I also had to cost part affecting the cte , eψ and steer values by multipliers **(750, 750 and 10000)** respectively to make the vehicle complete the track. The cost part affecting the steering output has to be increased by **10000** in order to achieve smooth sequential steer values or else the vehicle was wobbling around the corners
+I also had to cost part affecting the cte , eψ and steer values by multipliers **(750, 750 and 10000)** respectively to make the vehicle complete the track. The cost part affecting the steering output had to be increased by **10000** in order to achieve smooth sequential steer values or else the vehicle was wobbling around the corners
 
 ``` c++
 
