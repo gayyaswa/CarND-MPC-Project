@@ -26,7 +26,7 @@ For the project T value choosen was **1s**
 based on that Number of timesteps N was fixed at **10** and dt was **0.1s**. This value was arrived based on the discussion in walkthrough video tried other values **(20, 0.05)** etc but the vehicle became unstable for these values and went out of the track so decided upon using the mentioned values.
 
 ## Polynomial Fitting and MPC Preprocessing
-Input waypoints or transformed into vehicle coordinates and transformed coordinates are used to fit a third order polynomial line. The genrated polynomial is used to compute vehicle cte0 and eψ0 for the initial state. The current state is passed into the cost optmizer which would geneate optimize actuation output steer angle and throttle by minimizing the cte and  eψ
+Input waypoints or transformed into vehicle coordinates and transformed coordinates are used to fit a third order polynomial line. The genrated polynomial is used to compute vehicle **cte0** and **eψ0** for the initial state. The current state is passed into the cost optmizer which would geneate optimize actuation output steer angle and throttle by minimizing the **cte and  eψ**
 
 ## Model Predictive Control with Latency
 
