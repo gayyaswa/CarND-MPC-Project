@@ -47,7 +47,7 @@ double y_t1 = yt0 + ( v * sin(psi0) * dt );
 double psi_t1 = psi0 - ( v/Lf * steer_value * dt );
 double v_t1 = v + throttle_value * dt;
 double cte_t1 = cte0 + v * sin(epsi0) * dt;
-double epsi_t1 = epsi0 - ( v/Lf * atan(coeffs[1]) * dt );
+double epsi_t1 = epsi0 - ( v/Lf * steer_value * dt );
 
 curr_state << x_t1, y_t1, psi_t1, v_t1, cte_t1, epsi_t1;
 ```
