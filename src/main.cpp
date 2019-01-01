@@ -148,7 +148,7 @@ int main() {
           double psi_t1 = psi0 - ( v/Lf * steer_value * dt );
           double v_t1 = v + throttle_value * dt;
           double cte_t1 = cte0 + v * sin(epsi0) * dt;
-          double epsi_t1 = epsi0 - ( v/Lf * throttle_value * dt );
+          double epsi_t1 = epsi0 - ( v/Lf * steer_value * dt );
 
           curr_state << x_t1, y_t1, psi_t1, v_t1, cte_t1, epsi_t1;
 
